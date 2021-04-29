@@ -78,6 +78,11 @@ resource "aws_cloudwatch_event_rule" "cloudwatch_frequency" {
   count               = var.autospotting_enabled ? 1 : 0
   name                = "${module.label.id}_frequency"
   schedule_expression = var.lambda_run_frequency
+  is_enabled          = true
+
+  lifecycle {
+    ignore_changes = [is_enabled]
+  }
 }
 
 resource "aws_cloudwatch_log_group" "log_group_autospotting" {
